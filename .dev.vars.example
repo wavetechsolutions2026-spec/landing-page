@@ -2,4 +2,6 @@
 # Never commit real secrets.
 RESEND_API_KEY=
 CONTACT_TO_EMAIL=
+# Sender. "Name <onboarding@resend.dev>" works for testing but only delivers to the
+# Resend account owner. For production, use an address on a domain verified in Resend.
 CONTACT_FROM_EMAIL=

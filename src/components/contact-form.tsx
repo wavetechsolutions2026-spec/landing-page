@@ -186,9 +186,8 @@ export function ContactForm() {
         {/* Honeypot field: hidden, left empty by real users. */}
         <input
           type="text"
-          name="website"
-          value=""
-          onChange={() => {}}
+          {...form.register("website")}
+          autoComplete="off"
           style={{ position: "absolute", left: -9999, width: 1, height: 1, opacity: 0 }}
           tabIndex={-1}
           aria-hidden="true"

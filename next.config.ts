@@ -3,9 +3,9 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 initOpenNextCloudflareForDev();
 
+// cacheComponents (and partialPrefetching, which depends on it) is left off:
+// it hangs on the Cloudflare Workers runtime under @opennextjs/cloudflare.
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
   images: { unoptimized: true },
   turbopack: {
     rules: {
