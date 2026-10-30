@@ -32,9 +32,17 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# opennext / wrangler
+.open-next/
+.wrangler/
+.dev.vars
 
 # vercel
 .vercel
+/audit
+/docs
 
 # typescript
 *.tsbuildinfo

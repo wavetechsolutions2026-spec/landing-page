@@ -1,0 +1,10 @@
+// Wrangler configuration for Wave Tech Solution
+// Learn more: https://developers.cloudflare.com/workers/wrangler/configuration/
+{
+  "name": "wave-tech-solution",
+  "main": ".open-next/worker.js",
+  "assets": { "directory": ".open-next/assets" },
+  "compatibility_date": "2026-10-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true }
+}

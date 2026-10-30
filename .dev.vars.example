@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local preview with `wrangler` / `opennextjs-cloudflare preview`.
+# Never commit real secrets.
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
