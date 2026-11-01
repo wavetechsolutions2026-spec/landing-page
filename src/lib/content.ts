@@ -4,7 +4,7 @@ export const siteConfig = {
     "We design and build software for businesses in Myanmar, Thailand, and beyond.",
   description:
     "Wave Tech Solution designs and builds landing pages, CMS websites, e-commerce stores, mobile apps, and custom software for growing businesses.",
-  url: "https://wavetechsolution.example.com",
+  url: "https://wave-tech-solution.wavetechsolutions2026.workers.dev", // TODO: switch to the custom domain when it is set up
   email: "wavetechsolutions2026@gmail.com",
   locations: ["Bangkok, Thailand", "Yangon, Myanmar", "Remote"], // TODO: replace placeholder with real locations
 };
