@@ -8,6 +8,7 @@ import { Services } from "@/components/sections/services";
 import { WhyUs } from "@/components/sections/why-us";
 import { Process } from "@/components/sections/process";
 import { Team } from "@/components/sections/team";
+import { Work } from "@/components/sections/work";
 import { FAQ } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
 
@@ -30,6 +31,7 @@ export default function Home() {
         <Services />
         <WhyUs />
         <Team />
+        <Work />
         <Process />
         <FAQ />
         <Contact />

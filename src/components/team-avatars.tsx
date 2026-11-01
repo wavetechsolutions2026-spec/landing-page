@@ -28,7 +28,7 @@ export function TeamAvatars({
   );
 }
 
-function MiniAvatar({ member, size }: { member: TeamMember; size: number }) {
+export function MiniAvatar({ member, size }: { member: TeamMember; size: number }) {
   const style = { width: size, height: size };
   const ring = "rounded-full ring-2 ring-background";
 

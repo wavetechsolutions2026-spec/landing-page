@@ -12,6 +12,7 @@ export const siteConfig = {
 export const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Team", href: "#team" },
+  { label: "Work", href: "#work" },
   { label: "Process", href: "#process" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
@@ -196,6 +197,7 @@ export const faqs = [
 
 export type TeamMember = {
   name: string;
+  shortName: string; // used in project credits, e.g. "Designed by Christine"
   role: string;
   bio: string;
   photo?: string; // 192px square face crop under /public/team/, for small avatars
@@ -210,6 +212,7 @@ export const team: TeamMember[] = [
   {
     // Source: https://kyawpaingoo.dev
     name: "Kyaw Paing Oo",
+    shortName: "Kyaw",
     role: "Full-Stack Developer",
     bio: "Full-stack developer with 3+ years of hands-on experience across CRM, healthcare, and social apps.",
     photo: "/team/kyaw-paing-oo.jpg",
@@ -222,6 +225,7 @@ export const team: TeamMember[] = [
   {
     // Source: docs/Thuta_Aung_CV.pdf
     name: "Thuta Aung",
+    shortName: "Thuta",
     role: "Project Manager",
     bio: "Keeps projects on schedule and clients in the loop. Has delivered end-to-end cloud and telecom projects, coordinating clients and vendors and running user acceptance testing before launch. Holds a BSc in Business IT and is studying an MSc in Computer Science.",
     photo: undefined, // TODO: add thuta-aung.jpg and thuta-aung-portrait.jpg under /public/team/
@@ -232,11 +236,118 @@ export const team: TeamMember[] = [
   {
     // Source: Christine_PwintYeeMon_2026.pdf
     name: "Pwint Yee Mon (Christine)",
+    shortName: "Christine",
     role: "Product Designer (UX/UI)",
     bio: "Product designer with 4+ years of experience turning complex enterprise and government systems into interfaces that are easy to use, across web, mobile, and kiosk.",
     photo: undefined, // TODO: add christine-mon.jpg and christine-mon-portrait.jpg under /public/team/
     skills: ["UX Research", "UI Design", "Design Systems", "Prototyping", "Figma"],
     portfolioUrl: "https://www.behance.net/christine-mon/projects",
     linkedinUrl: "https://www.linkedin.com/in/christine-mon",
+  },
+];
+
+// Industries the team has worked in, before Wave Tech. Keys match
+// `projects[].industry`; `people` must match `team[].shortName`.
+export const industries = [
+  { id: "healthcare", icon: "HeartPulse", title: "Healthcare", people: ["Kyaw"] },
+  { id: "rewards", icon: "Gift", title: "Rewards & CRM", people: ["Kyaw", "Christine"] },
+  { id: "government", icon: "GraduationCap", title: "Government & e-learning", people: ["Christine"] },
+  { id: "mobility", icon: "Car", title: "Mobility & car rental", people: ["Christine"] },
+  { id: "property", icon: "House", title: "Housing & social apps", people: ["Kyaw"] },
+  { id: "telecom", icon: "Cloud", title: "Telecom & cloud", people: ["Thuta"] },
+] as const;
+
+export type Project = {
+  id: string;
+  title: string;
+  category: string;
+  summary: string;
+  industry: (typeof industries)[number]["id"];
+  member: string; // team[].shortName
+  context: string; // where the work was done; these are individual, not agency, projects
+  href: string;
+  linkLabel: string;
+  image?: string; // 16:10 image under /public/work/, supplied by the team member
+};
+
+// Individual work by team members, from their portfolios and CVs.
+export const projects: Project[] = [
+  {
+    // Source: https://kyawpaingoo.dev
+    id: "surebenefits",
+    title: "SureBenefits",
+    category: "Mobile API + admin CRM",
+    summary:
+      "Built the mobile API and admin CRM for a rewards and loyalty platform, covering payments, pre-orders, a real-time queue, and high-volume transactions.",
+    industry: "rewards",
+    member: "Kyaw",
+    context: "At Yammobots",
+    href: "https://kyawpaingoo.dev",
+    linkLabel: "View on portfolio",
+  },
+  {
+    // Source: Christine_PwintYeeMon_2026.pdf
+    id: "haupcar",
+    title: "Haupcar",
+    category: "UX/UI redesign",
+    summary:
+      "Redesigned the car rental mobile app, websites, and partner app, set up the design system, and simplified subscription, payment, and partner sign-up flows.",
+    industry: "mobility",
+    member: "Christine",
+    context: "At Haupcar",
+    href: "https://www.behance.net/christine-mon/projects",
+    linkLabel: "View on Behance",
+  },
+  {
+    // Source: docs/Thuta_Aung_CV.pdf
+    id: "cloud-delivery",
+    title: "Cloud & telecom delivery",
+    category: "Project delivery",
+    summary:
+      "Supported end-to-end cloud and telecom projects: migrations across multi-cloud environments, user acceptance testing, and regular updates with clients and vendors.",
+    industry: "telecom",
+    member: "Thuta",
+    context: "At Myanmar Post and Telecommunication",
+    href: "https://www.linkedin.com/in/thuta-aung-2b3b96263",
+    linkLabel: "View on LinkedIn",
+  },
+  {
+    // Source: https://kyawpaingoo.dev
+    id: "careme",
+    title: "CareMe",
+    category: "Admin dashboard",
+    summary:
+      "Developed the admin dashboard for a clinic management platform and moved it from ASP.NET to Blazor with a .NET API.",
+    industry: "healthcare",
+    member: "Kyaw",
+    context: "At Yammobots",
+    href: "https://kyawpaingoo.dev",
+    linkLabel: "View on portfolio",
+  },
+  {
+    // Source: Christine_PwintYeeMon_2026.pdf
+    id: "digital-learning-space",
+    title: "Digital Learning Space",
+    category: "Product design",
+    summary:
+      "Designed a large-scale e-learning system covering library, learning, training, and exam management for many kinds of users.",
+    industry: "government",
+    member: "Christine",
+    context: "For MINDEF Singapore, at EMQ2",
+    href: "https://www.behance.net/christine-mon/projects",
+    linkLabel: "View on Behance",
+  },
+  {
+    // Source: https://kyawpaingoo.dev
+    id: "colive",
+    title: "CoLive",
+    category: "Web & mobile app",
+    summary:
+      "Took a roommate-finder prototype to a production app on web and mobile, with compatibility matching, secure sign-in, and real-time chat.",
+    industry: "property",
+    member: "Kyaw",
+    context: "Lead developer",
+    href: "https://colive.info",
+    linkLabel: "Visit colive.info",
   },
 ];

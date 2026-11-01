@@ -13,7 +13,7 @@ import { Reveal } from "@/components/motion/reveal";
 
 export function FAQ() {
   return (
-    <section id="faq" className="section-y bg-surface">
+    <section id="faq" className="section-y bg-background">
       <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <Reveal className="self-start">
           <span className="eyebrow">FAQ</span>

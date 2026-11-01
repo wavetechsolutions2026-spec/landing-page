@@ -247,6 +247,12 @@ body {
   color: var(--accent-highlight);
 }
 
+/* Dot grid in the current text colour, for image placeholders. */
+@utility dot-grid {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 /* Soft brand wash behind the hero; a gradient, not a blur filter. Its top
    edge is plain surface so it meets the unscrolled header without a seam. */
 @utility hero-glow {
