@@ -4,24 +4,27 @@ import { Reveal } from "@/components/motion/reveal";
 
 export function Team() {
   return (
-    <section id="team" className="bg-background py-20 md:py-32">
+    <section id="team" className="section-y bg-surface">
       <div className="container-page">
-        <Reveal className="text-center max-w-2xl mx-auto mb-16 md:mb-24" delay={0}>
-          <h2 className="type-h2 text-foreground">
-            Meet the team
+        <Reveal className="max-w-2xl mb-12 md:mb-16" delay={0}>
+          <span className="eyebrow">Our team</span>
+          <h2 className="type-h2 mt-4 text-foreground">
+            The people behind your project
           </h2>
           <p className="mt-4 text-muted-foreground">
-            A small team of developers. Explore our individual work below.
+            A developer, a project manager, and a product designer. Each of us has delivered real projects. Explore our individual work below.
           </p>
         </Reveal>
 
-        <div className="card-row">
+        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {team.map((member, index) => (
-            <Reveal key={member.name} className="card-row-item" delay={index * 0.08}>
-              <TeamCard member={member} />
-            </Reveal>
+            <li key={member.name}>
+              <Reveal className="h-full" delay={index * 0.08}>
+                <TeamCard member={member} />
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

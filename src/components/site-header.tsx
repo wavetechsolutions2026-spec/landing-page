@@ -34,8 +34,10 @@ export function SiteHeader() {
     <Sheet>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b bg-background/90 backdrop-blur-sm transition-colors",
-          scrolled ? "border-border" : "border-transparent",
+          "sticky top-0 z-40 border-b transition-colors",
+          scrolled
+            ? "border-border bg-background/90 backdrop-blur-sm"
+            : "border-transparent bg-surface",
         )}
       >
         <div className="container-page flex h-(--header-height) items-center justify-between">
@@ -46,7 +48,7 @@ export function SiteHeader() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-foreground hover:text-accent-highlight transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.label}
               </Link>

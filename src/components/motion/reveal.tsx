@@ -2,6 +2,8 @@
 
 import { motion } from "motion/react";
 
+// Slides content up as it scrolls into view. Opacity is never animated, so
+// the server-rendered markup is readable before JavaScript loads.
 // Reduced motion is handled globally by MotionProvider.
 export function Reveal({
   children,
@@ -15,8 +17,8 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ y: 16 }}
+      whileInView={{ y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, ease: "easeOut", delay }}
     >

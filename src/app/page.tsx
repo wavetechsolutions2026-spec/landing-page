@@ -2,6 +2,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Suspense } from "react";
 import { Hero } from "@/components/sections/hero";
+import { About } from "@/components/sections/about";
+import { ServiceBand } from "@/components/sections/service-band";
 import { Services } from "@/components/sections/services";
 import { WhyUs } from "@/components/sections/why-us";
 import { Process } from "@/components/sections/process";
@@ -23,15 +25,17 @@ export default function Home() {
 
       <main id="content" className="flex-1">
         <Hero />
+        <About />
+        <ServiceBand />
         <Services />
         <WhyUs />
-        <Process />
         <Team />
+        <Process />
         <FAQ />
         <Contact />
       </main>
 
-      <Suspense fallback={<footer className="border-t border-border/40 bg-surface p-6">&nbsp;</footer>}>
+      <Suspense fallback={<footer className="theme-dark bg-background p-6">&nbsp;</footer>}>
         <SiteFooter />
       </Suspense>
     </div>

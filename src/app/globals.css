@@ -1,44 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  /* Design tokens (dark mode only) */
+  /* Design tokens (light theme; .theme-dark below scopes dark panels) */
+  --background: #ffffff;
+  /* Pale brand tint for alternating sections. */
+  --surface: #eff4ff;
+  --border: #e2e8f0;
+  --accent-fill: #dbe7ff;
+  /* Brand blue: 6.70:1 with white, 6.08:1 on surface. */
+  --accent-highlight: #1d4ed8;
+  /* Near-black navy for contrast cards. */
+  --ink: #0b1220;
+
+  /* shadcn/ui theme tokens */
+  /* Brand CTA with white label: 6.70:1. Hover: 8.72:1. */
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1e40af;
+  --secondary: #eff4ff;
+  --secondary-foreground: #0b1220;
+  --muted: #eff4ff;
+  /* 7.56:1 on white, 6.86:1 on surface. */
+  --muted-foreground: #4b5563;
+  --accent: #eff4ff;
+  --accent-foreground: #1d4ed8;
+  /* Form field edges: 3.68:1 on white (WCAG 1.4.11). */
+  --input: #7b8698;
+  --ring: #2563eb;
+  --foreground: #0b1220;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #059669;
+  --success-foreground: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #0b1220;
+  --card: #ffffff;
+  --card-foreground: #0b1220;
+  --card-border: #dbe2ec;
+
+  /* Sticky header height, used to offset anchor jumps. */
+  --header-height: 4rem;
+}
+
+/* Dark panel inside the light page (laptop mockup, contrast cards).
+   The values are the original dark palette. */
+.theme-dark {
   --background: #0a0a0b;
   --surface: #111214;
   --border: #1f2125;
   --accent-fill: #1e3a8a;
-  --accent-highlight: #3b82f6;
-
-  /* shadcn/ui theme tokens */
-  /* Navy CTA with white label: 10.36:1. Hover mixes toward blue: 7.91:1. */
-  --primary: #1e3a8a;
-  --primary-foreground: #ffffff;
-  --primary-hover: color-mix(in srgb, #1e3a8a 75%, #3b82f6);
-  --secondary: #111214;
-  --secondary-foreground: #f5f5f5;
-  --muted: #111214;
-  --muted-foreground: #9ca3af;
-  --accent: #111214;
-  --accent-foreground: #3b82f6;
-  --border: #1f2125;
-  /* Form field edges: 58% muted text over background, 3.28:1 (WCAG 1.4.11). */
-  --input: color-mix(in srgb, #9ca3af 58%, #0a0a0b);
-  --ring: #3b82f6;
-  --background: #0a0a0b;
+  --accent-highlight: #60a5fa;
   --foreground: #f5f5f5;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --success: #10b981;
-  --success-foreground: #ffffff;
-  --popover: #0a0a0b;
-  --popover-foreground: #f5f5f5;
+  --muted-foreground: #9ca3af;
   --card: #111214;
   --card-foreground: #f5f5f5;
-  /* Card and badge edges: 25% muted text over surface, 1.55:1. Visible on
-     surface sections, where card and section share the same fill. */
   --card-border: color-mix(in srgb, #9ca3af 25%, #111214);
-
-  /* Sticky header height, used to offset anchor jumps. */
-  --header-height: 4rem;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -68,12 +85,15 @@
   --color-accent-fill: var(--accent-fill);
   --color-accent-highlight: var(--accent-highlight);
   --color-surface: var(--surface);
+  --color-ink: var(--ink);
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-bricolage);
 }
 
 @theme {
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-marquee: marquee 40s linear infinite;
 
   @keyframes accordion-down {
     from {
@@ -90,6 +110,15 @@
     }
     to {
       height: 0;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
     }
   }
 }
@@ -109,7 +138,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-padding-top: calc(var(--header-height) + 1rem);
 }
 
@@ -121,7 +150,8 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-accordion-down,
-  .animate-accordion-up {
+  .animate-accordion-up,
+  .animate-marquee {
     animation: none;
   }
 }
@@ -144,36 +174,26 @@ body {
   }
 }
 
-/* Card rows: wrap and center so a short last row never sits alone on the left. */
-@utility card-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-}
+/* Vertical rhythm shared by every section. */
+@utility section-y {
+  padding-block: 5rem;
 
-@utility card-row-item {
-  width: 100%;
-
-  @media (width >= 40rem) {
-    width: calc(50% - 0.75rem);
-  }
-
-  @media (width >= 64rem) {
-    width: calc(100% / 3 - 1rem);
+  @media (width >= 48rem) {
+    padding-block: 6rem;
   }
 }
 
 /* Type scale: display, h2, h3. Body is 16px, small is 14px (text-sm). */
 @utility type-display {
-  font-size: 2.25rem;
-  line-height: 1.1;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.035em;
 
   @media (width >= 48rem) {
     font-size: 3.75rem;
-    line-height: 1.05;
+    line-height: 1.04;
   }
 
   @media (width >= 64rem) {
@@ -182,21 +202,36 @@ body {
 }
 
 @utility type-h2 {
-  font-size: 1.875rem;
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 
   @media (width >= 48rem) {
-    font-size: 2.25rem;
+    font-size: 2.75rem;
   }
 }
 
 @utility type-h3 {
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  line-height: 1.4;
+  line-height: 1.35;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+}
+
+/* Small pill label above section headings. */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--accent-fill);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent-highlight);
 }
 
 /* Icon container used by service and why-us cards. */
@@ -204,19 +239,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   flex-shrink: 0;
-  border-radius: 0.5rem;
-  background-color: color-mix(in srgb, var(--accent-fill) 30%, transparent);
+  border-radius: 0.75rem;
+  background-color: var(--accent-fill);
   color: var(--accent-highlight);
 }
 
-/* Soft navy glow behind the hero; a gradient, not a blur filter. */
+/* Soft brand wash behind the hero; a gradient, not a blur filter. Its top
+   edge is plain surface so it meets the unscrolled header without a seam. */
 @utility hero-glow {
-  background-image: radial-gradient(
-    ellipse 50% 45% at 50% 40%,
-    color-mix(in srgb, var(--accent-fill) 35%, transparent),
-    transparent 70%
-  );
+  background-image:
+    radial-gradient(ellipse 55% 35% at 50% 40%, var(--accent-fill), transparent 70%),
+    linear-gradient(to bottom, var(--surface), var(--background));
 }
