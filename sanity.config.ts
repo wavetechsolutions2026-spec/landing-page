@@ -16,6 +16,10 @@ export default defineConfig({
   title: "Wave Tech Solution",
   projectId,
   dataset,
+  // Google login only; GitHub and email/password are hidden.
+  auth: {
+    providers: (providers) => providers.filter((provider) => provider.name === "google"),
+  },
   schema: { types: schemaTypes },
   plugins: [
     structureTool({ structure }),
