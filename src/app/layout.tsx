@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Geist } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { siteConfig } from "@/lib/content";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,7 +17,7 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wavetechsolution.example.com"),
+  metadataBase: new URL(siteConfig.url),
   title: "Wave Tech Solution — Websites, E-commerce & Mobile Apps",
   description:
     "We design and build websites, online stores, mobile apps, and custom software for businesses in Myanmar, Thailand, and beyond.",

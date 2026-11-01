@@ -1,9 +1,10 @@
 import { MetadataRoute } from "next";
+import { siteConfig } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://wavetechsolution.example.com",
+      url: siteConfig.url,
       changeFrequency: "monthly",
       priority: 1,
     },
