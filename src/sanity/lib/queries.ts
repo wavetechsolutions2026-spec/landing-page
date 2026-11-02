@@ -19,11 +19,6 @@ export const LANDING_QUERY = defineQuery(`{
   },
   "projects": *[_type == "project" && defined(title)] | ${ORDER} {
     "id": _id, title, category, summary, industry,
-    // Older documents have a single "member" reference instead of "members".
-    "members": select(
-      count(members) > 0 => members[]->shortName,
-      defined(member) => [member->shortName],
-      []
-    ), context, "href": link, linkLabel, image
+"members": coalesce(members[]->shortName, []), context, "href": link, linkLabel, image
   }
 }`);
