@@ -45,7 +45,20 @@ export const stats = [
   },
 ] as const;
 
-export const services = [
+// The types and lists below are the fallback copy. The live services, FAQs,
+// team, and projects are edited in Sanity (/studio) and loaded by
+// src/sanity/lib/landing.ts.
+export type Service = {
+  id: string;
+  title: string;
+  icon: string; // lucide-react icon name, see SERVICE_ICONS in the schema
+  description: string;
+  bullets: string[];
+};
+
+export type FAQItem = { id: string; question: string; answer: string };
+
+export const services: Service[] = [
   {
     id: "landing-pages",
     title: "Landing Pages",
@@ -106,7 +119,7 @@ export const services = [
       "Connects with tools you already use",
     ],
   },
-] as const;
+];
 
 export const whyUs = [
   {
@@ -162,7 +175,7 @@ export const processSteps = [
   },
 ] as const;
 
-export const faqs = [
+export const faqs: FAQItem[] = [
   {
     id: "cost",
     question: "How much does a project cost?",
@@ -193,15 +206,17 @@ export const faqs = [
     answer:
       "Yes. We offer maintenance and support after your project goes live.",
   },
-] as const;
+];
 
 export type TeamMember = {
+  id?: string;
   name: string;
   shortName: string; // used in project credits, e.g. "Designed by Christine"
   role: string;
   bio: string;
   photo?: string; // 192px square face crop under /public/team/, for small avatars
   portrait?: string; // 1200x900 (4:3) photo under /public/team/, for the team card
+  photoAlt?: string;
   skills: string[];
   portfolioUrl?: string;
   githubUrl?: string;
@@ -247,14 +262,14 @@ export const team: TeamMember[] = [
 ];
 
 // Industries the team has worked in, before Wave Tech. Keys match
-// `projects[].industry`; `people` must match `team[].shortName`.
+// `projects[].industry`. The people shown on each tile come from the projects.
 export const industries = [
-  { id: "healthcare", icon: "HeartPulse", title: "Healthcare", people: ["Kyaw"] },
-  { id: "rewards", icon: "Gift", title: "Rewards & CRM", people: ["Kyaw", "Christine"] },
-  { id: "government", icon: "GraduationCap", title: "Government & e-learning", people: ["Christine"] },
-  { id: "mobility", icon: "Car", title: "Mobility & car rental", people: ["Christine"] },
-  { id: "property", icon: "House", title: "Housing & social apps", people: ["Kyaw"] },
-  { id: "telecom", icon: "Cloud", title: "Telecom & cloud", people: ["Thuta"] },
+  { id: "healthcare", icon: "HeartPulse", title: "Healthcare" },
+  { id: "rewards", icon: "Gift", title: "Rewards & CRM" },
+  { id: "government", icon: "GraduationCap", title: "Government & e-learning" },
+  { id: "mobility", icon: "Car", title: "Mobility & car rental" },
+  { id: "property", icon: "House", title: "Housing & social apps" },
+  { id: "telecom", icon: "Cloud", title: "Telecom & cloud" },
 ] as const;
 
 export type Project = {
@@ -262,7 +277,7 @@ export type Project = {
   title: string;
   category: string;
   summary: string;
-  industry: (typeof industries)[number]["id"];
+  industry: string; // industries[].id
   member: string; // team[].shortName
   context: string; // where the work was done; these are individual, not agency, projects
   href: string;

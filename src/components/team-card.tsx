@@ -17,7 +17,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
           <Image
             className="object-cover"
             src={member.portrait}
-            alt={`Photo of ${member.name}`}
+            alt={member.photoAlt || `Photo of ${member.name}`}
             fill
             sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
             priority

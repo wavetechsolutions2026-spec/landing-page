@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { navLinks, services, siteConfig } from "@/lib/content";
+import { navLinks, siteConfig, type Service } from "@/lib/content";
 
-export function SiteFooter() {
+export function SiteFooter({ services }: { services: Service[] }) {
   const year = new Date().getFullYear();
 
   return (

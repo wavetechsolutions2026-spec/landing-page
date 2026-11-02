@@ -8,10 +8,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { faqs } from "@/lib/content";
+import type { FAQItem } from "@/lib/content";
 import { Reveal } from "@/components/motion/reveal";
 
-export function FAQ() {
+export function FAQ({ faqs }: { faqs: FAQItem[] }) {
   return (
     <section id="faq" className="section-y bg-background">
       <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">

@@ -1,10 +1,10 @@
 import { Asterisk } from "lucide-react";
-import { services } from "@/lib/content";
+import type { Service } from "@/lib/content";
 
 // Decorative brand strip with the service names scrolling past. The list is
 // rendered twice so the loop is seamless; screen readers skip it because the
 // services section below names the same things.
-export function ServiceBand() {
+export function ServiceBand({ services }: { services: Service[] }) {
   const items = [...services, ...services];
 
   return (

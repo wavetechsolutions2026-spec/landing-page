@@ -2,9 +2,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { TeamAvatars } from "@/components/team-avatars";
-import { stats } from "@/lib/content";
+import { stats, type TeamMember } from "@/lib/content";
 
-export function About() {
+export function About({ team }: { team: TeamMember[] }) {
   const [specialists, languages] = stats;
 
   return (
@@ -29,9 +29,9 @@ export function About() {
 
         <Reveal className="grid gap-4 sm:grid-cols-2" delay={0.08}>
           <div className="flex flex-col justify-between gap-10 rounded-2xl bg-primary p-6 text-primary-foreground">
-            <TeamAvatars size={44} className="[&>*]:ring-primary" />
+            <TeamAvatars team={team} size={44} className="[&>*]:ring-primary" />
             <div>
-              <div className="font-display text-6xl font-bold tracking-tight">{specialists.value}</div>
+              <div className="font-display text-6xl font-bold tracking-tight">{team.length || specialists.value}</div>
               <p className="mt-2 text-sm text-primary-foreground/85">{specialists.label}</p>
             </div>
           </div>

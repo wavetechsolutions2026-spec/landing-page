@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowUpRight, Car, Cloud, Gift, GraduationCap, HeartPulse, House } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { MiniAvatar } from "@/components/team-avatars";
-import { industries, projects, team, type Project } from "@/lib/content";
+import { industries, type Project, type TeamMember } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -22,9 +22,11 @@ const TONES = [
   "theme-dark bg-ink text-accent-highlight",
 ];
 
-const memberByShortName = (shortName: string) => team.find((m) => m.shortName === shortName);
+export function Work({ projects, team }: { projects: Project[]; team: TeamMember[] }) {
+  // Each industry tile names the people whose projects are in it.
+  const peopleIn = (industryId: string) =>
+    [...new Set(projects.filter((p) => p.industry === industryId).map((p) => p.member))].filter(Boolean);
 
-export function Work() {
   return (
     <section id="work" className="section-y bg-background">
       <div className="container-page">
@@ -53,7 +55,7 @@ export function Work() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-foreground">{industry.title}</div>
-                    <div className="mt-0.5 text-xs text-muted-foreground">{industry.people.join(", ")}</div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">{peopleIn(industry.id).join(", ")}</div>
                   </div>
                 </li>
               );
@@ -65,7 +67,11 @@ export function Work() {
           {projects.map((project, index) => (
             <li key={project.id}>
               <Reveal className="h-full" delay={(index % 3) * 0.08}>
-                <ProjectCard project={project} tone={TONES[index % TONES.length]} />
+                <ProjectCard
+                  project={project}
+                  member={team.find((m) => m.shortName === project.member)}
+                  tone={TONES[index % TONES.length]}
+                />
               </Reveal>
             </li>
           ))}
@@ -75,8 +81,7 @@ export function Work() {
   );
 }
 
-function ProjectCard({ project, tone }: { project: Project; tone: string }) {
-  const member = memberByShortName(project.member);
+function ProjectCard({ project, member, tone }: { project: Project; member?: TeamMember; tone: string }) {
   const industry = industries.find((i) => i.id === project.industry);
   const Icon = industry ? ICONS[industry.icon] : null;
 

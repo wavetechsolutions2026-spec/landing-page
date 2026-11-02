@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Check, Code, Layout, LayoutGrid, ShoppingCart, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { services } from "@/lib/content";
+import type { Service } from "@/lib/content";
 import { Reveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Code,
 };
 
-export function Services() {
+export function Services({ services }: { services: Service[] }) {
   return (
     <section id="services" className="section-y bg-surface">
       <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
@@ -48,8 +48,8 @@ export function Services() {
   );
 }
 
-function ServiceCard({ service }: { service: (typeof services)[number] }) {
-  const Icon = ICONS[service.icon];
+function ServiceCard({ service }: { service: Service }) {
+  const Icon = ICONS[service.icon] ?? Code;
 
   return (
     <article className="h-full rounded-2xl border border-card-border bg-card p-6 transition-shadow hover:shadow-md">

@@ -1,8 +1,8 @@
-import { team } from "@/lib/content";
+import type { TeamMember } from "@/lib/content";
 import { TeamCard } from "@/components/team-card";
 import { Reveal } from "@/components/motion/reveal";
 
-export function Team() {
+export function Team({ team }: { team: TeamMember[] }) {
   return (
     <section id="team" className="section-y bg-surface">
       <div className="container-page">
@@ -18,7 +18,7 @@ export function Team() {
 
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {team.map((member, index) => (
-            <li key={member.name}>
+            <li key={member.id ?? member.name}>
               <Reveal className="h-full" delay={index * 0.08}>
                 <TeamCard member={member} />
               </Reveal>

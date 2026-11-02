@@ -3,11 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LaptopMockup } from "@/components/laptop-mockup";
 import { TeamAvatars } from "@/components/team-avatars";
-import { builtWith } from "@/lib/content";
+import { builtWith, type TeamMember } from "@/lib/content";
 
 // Rendered without reveal animations so the headline is visible on first
 // paint, before JavaScript loads.
-export function Hero() {
+export function Hero({ team }: { team: TeamMember[] }) {
   return (
     <section id="home" className="hero-glow overflow-hidden pt-16 md:pt-24">
       <div className="container-page text-center">
@@ -20,7 +20,7 @@ export function Hero() {
           Websites, online stores{" "}
           {/* The team, set into the headline like an inline image. */}
           <span className="hidden translate-y-[-0.1em] items-center rounded-full border border-card-border bg-background p-1.5 align-middle shadow-sm sm:inline-flex">
-            <TeamAvatars size={44} />
+            <TeamAvatars team={team} size={44} />
           </span>{" "}
           and apps for your business.
         </h1>

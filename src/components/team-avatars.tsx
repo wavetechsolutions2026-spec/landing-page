@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { team, type TeamMember } from "@/lib/content";
+import type { TeamMember } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function initials(name: string) {
@@ -13,16 +13,18 @@ export function initials(name: string) {
 
 // Overlapping round photos of the team; initials stand in for missing photos.
 export function TeamAvatars({
+  team,
   className,
   size = 40,
 }: {
+  team: TeamMember[];
   className?: string;
   size?: number;
 }) {
   return (
     <span className={cn("inline-flex -space-x-2.5", className)} aria-hidden="true">
       {team.map((member) => (
-        <MiniAvatar key={member.name} member={member} size={size} />
+        <MiniAvatar key={member.id ?? member.name} member={member} size={size} />
       ))}
     </span>
   );
