@@ -18,9 +18,12 @@ export const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+export type Tech = { id: string; name: string; logo?: string };
+
 // Tools the team works with. Shown in place of client logos, which the
-// agency does not have yet.
-export const builtWith = [
+// agency does not have yet. Edited in Sanity as "Tech stack"; this list is
+// used until the first entry is published there.
+const builtWith = [
   "Next.js",
   "React Native",
   "TypeScript",
@@ -29,7 +32,9 @@ export const builtWith = [
   "PostgreSQL",
   "AWS",
   "Figma",
-] as const;
+];
+
+export const techStack: Tech[] = builtWith.map((name) => ({ id: name, name }));
 
 // Team facts only; no invented client numbers.
 export const stats = [

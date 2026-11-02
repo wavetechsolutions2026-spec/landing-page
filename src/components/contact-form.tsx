@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
@@ -9,7 +9,8 @@ import { contactFormAction } from "@/app/actions/contact";
 import {
   contactFormSchema,
   serviceOptions,
-  budgetOptions,
+  currencyOptions,
+  OTHER_SERVICE,
   type ContactFormValues,
 } from "@/lib/validations/contact";
 import {
@@ -41,11 +42,17 @@ export function ContactForm() {
       email: "",
       company: "",
       service: "",
-      budget: "",
+      serviceOther: "",
+      budgetCurrency: "USD",
+      budgetMin: "",
+      budgetMax: "",
       message: "",
       website: "",
     },
   });
+
+  const service = useWatch({ control: form.control, name: "service" });
+  const currency = useWatch({ control: form.control, name: "budgetCurrency" });
 
   const onSubmit = async (values: ContactFormValues) => {
     setIsSubmitting(true);
@@ -140,35 +147,79 @@ export function ContactForm() {
           )}
         />
 
-        <FormField
-          name="budget"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Budget range{" "}
-                <span className="font-normal text-muted-foreground">(optional)</span>
-              </FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                value={field.value}
-              >
+        {service === OTHER_SERVICE && (
+          <FormField
+            name="serviceOther"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>What service do you need?</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a budget range" />
-                  </SelectTrigger>
+                  <Input {...field} placeholder="e.g. A booking system for our clinic" autoFocus />
                 </FormControl>
-                <SelectContent>
-                  {budgetOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        <fieldset className="space-y-2">
+          <legend className="text-sm font-medium leading-none">
+            Budget range{" "}
+            <span className="font-normal text-muted-foreground">(optional)</span>
+          </legend>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-[8.5rem_minmax(0,1fr)_minmax(0,1fr)]">
+            <FormField
+              name="budgetCurrency"
+              render={({ field }) => (
+                <FormItem className="col-span-2 sm:col-span-1">
+                  <FormLabel className="sr-only">Currency</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger aria-label="Currency">
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {currencyOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="budgetMin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="sr-only">Minimum budget ({currency})</FormLabel>
+                  <FormControl>
+                    <Input {...field} inputMode="decimal" placeholder={`From (${currency})`} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="budgetMax"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="sr-only">Maximum budget ({currency})</FormLabel>
+                  <FormControl>
+                    <Input {...field} inputMode="decimal" placeholder={`To (${currency})`} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Leave blank if you&rsquo;re not sure yet. We&rsquo;ll suggest options that fit.
+          </p>
+        </fieldset>
 
         <FormField
           name="message"

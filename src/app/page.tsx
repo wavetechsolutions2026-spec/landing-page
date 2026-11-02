@@ -18,7 +18,7 @@ export default async function Home() {
   // Render on each request so edits published in Sanity show up right away,
   // without a redeploy. Sanity's CDN keeps these reads fast.
   await connection();
-  const { services, faqs, team, projects } = await getLandingContent();
+  const { techStack, services, faqs, team, projects } = await getLandingContent();
 
   return (
     <div className="flex flex-col min-h-svh">
@@ -32,7 +32,7 @@ export default async function Home() {
       <SiteHeader />
 
       <main id="content" className="flex-1">
-        <Hero team={team} />
+        <Hero team={team} techStack={techStack} />
         <About team={team} />
         <ServiceBand services={services} />
         <Services services={services} />

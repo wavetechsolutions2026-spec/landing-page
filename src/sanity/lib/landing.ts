@@ -3,9 +3,10 @@ import { client } from "./client";
 import { urlFor } from "./image";
 import { LANDING_QUERY } from "./queries";
 import * as fallback from "@/lib/content";
-import type { FAQItem, Project, Service, TeamMember } from "@/lib/content";
+import type { FAQItem, Project, Service, TeamMember, Tech } from "@/lib/content";
 
 export type LandingContent = {
+  techStack: Tech[];
   services: Service[];
   faqs: FAQItem[];
   team: TeamMember[];
@@ -15,6 +16,7 @@ export type LandingContent = {
 type SanityImage = (SanityImageSource & { asset?: unknown; alt?: string }) | null;
 
 type RawLanding = {
+  techStack: (Omit<Tech, "logo"> & { logo: SanityImage })[];
   services: Service[];
   faqs: FAQItem[];
   team: (Omit<TeamMember, "photo" | "portrait"> & { id: string; photo: SanityImage })[];
@@ -32,6 +34,13 @@ export async function getLandingContent(): Promise<LandingContent> {
     const data = await client.fetch<RawLanding>(LANDING_QUERY, {}, { cache: "no-store" });
 
     return {
+      // Until a tech stack entry is published, keep showing the default list.
+      techStack: data.techStack.length
+        ? data.techStack.map(({ logo, ...tech }) => ({
+            ...tech,
+            logo: hasAsset(logo) ? urlFor(logo).height(48).url() : undefined,
+          }))
+        : fallback.techStack,
       services: data.services,
       faqs: data.faqs,
       team: data.team.map(({ photo, ...member }) => ({
@@ -49,6 +58,7 @@ export async function getLandingContent(): Promise<LandingContent> {
   } catch (error) {
     console.error("[sanity] Failed to load landing content, using fallback copy.", error);
     return {
+      techStack: fallback.techStack,
       services: fallback.services,
       faqs: fallback.faqs,
       team: fallback.team,

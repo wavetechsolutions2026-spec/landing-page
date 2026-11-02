@@ -3,6 +3,8 @@
 import { Resend } from "resend";
 import {
   contactFormSchema,
+  describeService,
+  formatBudget,
   type ContactFormValues,
 } from "@/lib/validations/contact";
 
@@ -34,7 +36,9 @@ export async function contactFormAction(
     return { success: false, error: SEND_FAILED };
   }
 
-  const { name, email, company, service, budget, message } = parsed.data;
+  const { name, email, company, message } = parsed.data;
+  const service = describeService(parsed.data);
+  const budget = formatBudget(parsed.data);
   const fields = { name, email, company, service, budget, message };
 
   try {

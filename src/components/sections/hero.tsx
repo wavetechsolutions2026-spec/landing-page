@@ -3,11 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LaptopMockup } from "@/components/laptop-mockup";
 import { TeamAvatars } from "@/components/team-avatars";
-import { builtWith, type TeamMember } from "@/lib/content";
+import type { TeamMember, Tech } from "@/lib/content";
 
 // Rendered without reveal animations so the headline is visible on first
 // paint, before JavaScript loads.
-export function Hero({ team }: { team: TeamMember[] }) {
+export function Hero({ team, techStack }: { team: TeamMember[]; techStack: Tech[] }) {
   return (
     <section id="home" className="hero-glow overflow-hidden pt-16 md:pt-24">
       <div className="container-page text-center">
@@ -44,9 +44,17 @@ export function Hero({ team }: { team: TeamMember[] }) {
         <div className="mx-auto mt-14 max-w-3xl">
           <p className="text-sm text-muted-foreground">Built with tools trusted worldwide</p>
           <ul className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {builtWith.map((tool) => (
-              <li key={tool} className="font-display text-lg font-semibold text-foreground/70">
-                {tool}
+            {techStack.map((tool) => (
+              <li
+                key={tool.id}
+                className="flex items-center gap-2 font-display text-lg font-semibold text-foreground/70"
+              >
+                {tool.logo && (
+                  // Plain img: logos are small, and SVGs vary in aspect ratio.
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={tool.logo} alt="" className="h-6 w-auto" loading="lazy" />
+                )}
+                {tool.name}
               </li>
             ))}
           </ul>

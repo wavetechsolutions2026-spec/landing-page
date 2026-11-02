@@ -4,6 +4,9 @@ import { defineQuery } from "next-sanity";
 const ORDER = "order(coalesce(order, 9999) asc, _createdAt asc)";
 
 export const LANDING_QUERY = defineQuery(`{
+  "techStack": *[_type == "techStack" && defined(name)] | ${ORDER} {
+    "id": _id, name, logo
+  },
   "services": *[_type == "service" && defined(title)] | ${ORDER} {
     "id": _id, title, icon, description, "bullets": coalesce(bullets, [])
   },
