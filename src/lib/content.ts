@@ -275,6 +275,7 @@ export const industries = [
   { id: "mobility", icon: "Car", title: "Mobility & car rental" },
   { id: "property", icon: "House", title: "Housing & social apps" },
   { id: "telecom", icon: "Cloud", title: "Telecom & cloud" },
+  { id: "ecommerce", icon: "ShoppingCart", title: "E-commerce" },
 ] as const;
 
 export type Project = {

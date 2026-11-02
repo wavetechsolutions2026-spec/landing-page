@@ -9,6 +9,7 @@ const INDUSTRIES = [
   { title: "Mobility & car rental", value: "mobility" },
   { title: "Housing & social apps", value: "property" },
   { title: "Telecom & cloud", value: "telecom" },
+  { title: "E-commerce", value: "ecommerce" },
 ];
 
 // An individual team member's project, not agency client work.

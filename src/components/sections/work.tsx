@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowUpRight, Car, Cloud, Gift, GraduationCap, HeartPulse, House } from "lucide-react";
+import { ArrowUpRight, Car, Cloud, Gift, GraduationCap, HeartPulse, House, ShoppingCart } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { MiniAvatar } from "@/components/team-avatars";
 import { industries, type Project, type TeamMember } from "@/lib/content";
@@ -12,6 +12,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Car,
   House,
   Cloud,
+  ShoppingCart,
 };
 
 // Placeholder panels cycle through three tones so a row of image-less cards
@@ -42,20 +43,23 @@ export function Work({ projects, team }: { projects: Project[]; team: TeamMember
 
         <Reveal delay={0.04}>
           <h3 className="sr-only">Industries we have worked in</h3>
-          <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-7">
             {industries.map((industry) => {
               const Icon = ICONS[industry.icon];
               return (
                 <li
                   key={industry.id}
-                  className="flex flex-col gap-3 rounded-2xl border border-card-border bg-card p-4"
+                  // An odd last tile fills the row on phones (two columns).
+                  className="flex flex-col gap-3 rounded-2xl border border-card-border bg-card p-4 odd:last:col-span-2 md:odd:last:col-span-1"
                 >
                   <div className="icon-tile">
                     <Icon className="size-5" aria-hidden="true" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-foreground">{industry.title}</div>
-                    <div className="mt-0.5 text-xs text-muted-foreground">{peopleIn(industry.id).join(", ")}</div>
+                    {peopleIn(industry.id).length > 0 && (
+                      <div className="mt-0.5 text-xs text-muted-foreground">{peopleIn(industry.id).join(", ")}</div>
+                    )}
                   </div>
                 </li>
               );
