@@ -278,7 +278,7 @@ export type Project = {
   category: string;
   summary: string;
   industry: string; // industries[].id
-  member: string; // team[].shortName
+  members: string[]; // team[].shortName, at least one
   context: string; // where the work was done; these are individual, not agency, projects
   href: string;
   linkLabel: string;
@@ -295,7 +295,7 @@ export const projects: Project[] = [
     summary:
       "Built the mobile API and admin CRM for a rewards and loyalty platform, covering payments, pre-orders, a real-time queue, and high-volume transactions.",
     industry: "rewards",
-    member: "Kyaw",
+    members: ["Kyaw"],
     context: "At Yammobots",
     href: "https://kyawpaingoo.dev",
     linkLabel: "View on portfolio",
@@ -308,7 +308,7 @@ export const projects: Project[] = [
     summary:
       "Redesigned the car rental mobile app, websites, and partner app, set up the design system, and simplified subscription, payment, and partner sign-up flows.",
     industry: "mobility",
-    member: "Christine",
+    members: ["Christine"],
     context: "At Haupcar",
     href: "https://www.behance.net/christine-mon/projects",
     linkLabel: "View on Behance",
@@ -321,7 +321,7 @@ export const projects: Project[] = [
     summary:
       "Supported end-to-end cloud and telecom projects: migrations across multi-cloud environments, user acceptance testing, and regular updates with clients and vendors.",
     industry: "telecom",
-    member: "Thuta",
+    members: ["Thuta"],
     context: "At Myanmar Post and Telecommunication",
     href: "https://www.linkedin.com/in/thuta-aung-2b3b96263",
     linkLabel: "View on LinkedIn",
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     summary:
       "Developed the admin dashboard for a clinic management platform and moved it from ASP.NET to Blazor with a .NET API.",
     industry: "healthcare",
-    member: "Kyaw",
+    members: ["Kyaw"],
     context: "At Yammobots",
     href: "https://kyawpaingoo.dev",
     linkLabel: "View on portfolio",
@@ -347,7 +347,7 @@ export const projects: Project[] = [
     summary:
       "Designed a large-scale e-learning system covering library, learning, training, and exam management for many kinds of users.",
     industry: "government",
-    member: "Christine",
+    members: ["Christine"],
     context: "For MINDEF Singapore, at EMQ2",
     href: "https://www.behance.net/christine-mon/projects",
     linkLabel: "View on Behance",
@@ -360,7 +360,7 @@ export const projects: Project[] = [
     summary:
       "Took a roommate-finder prototype to a production app on web and mobile, with compatibility matching, secure sign-in, and real-time chat.",
     industry: "property",
-    member: "Kyaw",
+    members: ["Kyaw"],
     context: "Lead developer",
     href: "https://colive.info",
     linkLabel: "Visit colive.info",

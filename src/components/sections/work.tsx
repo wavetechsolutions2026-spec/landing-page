@@ -25,7 +25,7 @@ const TONES = [
 export function Work({ projects, team }: { projects: Project[]; team: TeamMember[] }) {
   // Each industry tile names the people whose projects are in it.
   const peopleIn = (industryId: string) =>
-    [...new Set(projects.filter((p) => p.industry === industryId).map((p) => p.member))].filter(Boolean);
+    [...new Set(projects.filter((p) => p.industry === industryId).flatMap((p) => p.members))].filter(Boolean);
 
   return (
     <section id="work" className="section-y bg-background">
@@ -36,7 +36,7 @@ export function Work({ projects, team }: { projects: Project[]; team: TeamMember
             Selected work from our team
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Before starting Wave Tech, we designed, built, and delivered products across these industries. Each project below is one team member&rsquo;s own work.
+            Before starting Wave Tech, we designed, built, and delivered products across these industries. Each project below is our team members&rsquo; own work.
           </p>
         </Reveal>
 
@@ -69,7 +69,7 @@ export function Work({ projects, team }: { projects: Project[]; team: TeamMember
               <Reveal className="h-full" delay={(index % 3) * 0.08}>
                 <ProjectCard
                   project={project}
-                  member={team.find((m) => m.shortName === project.member)}
+                  members={project.members.flatMap((name) => team.find((m) => m.shortName === name) ?? [])}
                   tone={TONES[index % TONES.length]}
                 />
               </Reveal>
@@ -81,7 +81,7 @@ export function Work({ projects, team }: { projects: Project[]; team: TeamMember
   );
 }
 
-function ProjectCard({ project, member, tone }: { project: Project; member?: TeamMember; tone: string }) {
+function ProjectCard({ project, members, tone }: { project: Project; members: TeamMember[]; tone: string }) {
   const industry = industries.find((i) => i.id === project.industry);
   const Icon = industry ? ICONS[industry.icon] : null;
 
@@ -116,12 +116,18 @@ function ProjectCard({ project, member, tone }: { project: Project; member?: Tea
 
         <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-4">
           <div className="flex min-w-0 items-center gap-2.5">
-            {member && <MiniAvatar member={member} size={32} />}
+            {members.length > 0 && (
+              <span className="inline-flex shrink-0 -space-x-2">
+                {members.map((member) => (
+                  <MiniAvatar key={member.id ?? member.name} member={member} size={32} />
+                ))}
+              </span>
+            )}
             <div className="min-w-0 text-xs">
               <div className="font-medium text-foreground">
-                {project.member}
+                {formatNames(project.members)}
                 <span className="ml-1.5 rounded-full bg-muted px-1.5 py-0.5 font-normal text-muted-foreground">
-                  Individual project
+                  {project.members.length > 1 ? "Joint project" : "Individual project"}
                 </span>
               </div>
               <div className="truncate text-muted-foreground">{project.context}</div>
@@ -141,4 +147,9 @@ function ProjectCard({ project, member, tone }: { project: Project; member?: Tea
       </div>
     </article>
   );
+}
+
+// "Kyaw", "Kyaw & Thuta", "Kyaw, Thuta & Christine"
+function formatNames(names: string[]) {
+  return names.length > 1 ? `${names.slice(0, -1).join(", ")} & ${names.at(-1)}` : (names[0] ?? "");
 }

@@ -1,5 +1,5 @@
 import { ProjectsIcon } from "@sanity/icons/Projects";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 // Matches the industry tiles in the "Selected work" section.
 const INDUSTRIES = [
@@ -38,11 +38,23 @@ export const project = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "members",
+      title: "Team members",
+      description: "Everyone who worked on this project. The first one is shown first on the card.",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "teamMember" }] })],
+      validation: (rule) => rule.required().min(1).unique(),
+    }),
+    // Old single-member field. Kept hidden so existing documents still load;
+    // migrations/project-members moves it into `members`.
+    defineField({
       name: "member",
-      title: "Team member",
+      title: "Team member (old)",
       type: "reference",
       to: [{ type: "teamMember" }],
-      validation: (rule) => rule.required(),
+      hidden: ({ value }) => !value,
+      readOnly: true,
+      deprecated: { reason: 'Use "Team members" instead.' },
     }),
     defineField({
       name: "context",
@@ -72,7 +84,18 @@ export const project = defineType({
   ],
   orderings: [{ title: "Display order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
   preview: {
-    select: { title: "title", member: "member.shortName", media: "image" },
-    prepare: ({ title, member, media }) => ({ title, subtitle: member, media }),
+    select: {
+      title: "title",
+      m0: "members.0.shortName",
+      m1: "members.1.shortName",
+      m2: "members.2.shortName",
+      legacy: "member.shortName",
+      media: "image",
+    },
+    prepare: ({ title, m0, m1, m2, legacy, media }) => ({
+      title,
+      subtitle: [m0, m1, m2].filter(Boolean).join(", ") || legacy,
+      media,
+    }),
   },
 });
